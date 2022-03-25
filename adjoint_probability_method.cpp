@@ -57,14 +57,14 @@ extern "C"
 #define direct_no1_z 1.0
 
 /*第二个污染源n2的坐标*/
-#define direct_no2_x 2.0
-#define direct_no2_y 2.0
-#define direct_no2_z 1.0
+//#define direct_no2_x 2.0
+//#define direct_no2_y 2.0
+//#define direct_no2_z 1.0
 
 /*第三个污染源n3的坐标*/
-#define direct_no3_x 3.0
-#define direct_no3_y 3.0
-#define direct_no3_z 1.0
+//#define direct_no3_x 3.0
+//#define direct_no3_y 3.0
+//#define direct_no3_z 1.0
 
 /*第一个检测点n1的坐标*/
 #define inverse_no1_x 800
