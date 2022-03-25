@@ -98,6 +98,10 @@
     
     查看结果
     
+---
+
+# ✨Wells-Riley Model Used Euler Method in CFD
+
 
     
     
