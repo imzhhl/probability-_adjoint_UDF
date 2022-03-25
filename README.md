@@ -63,7 +63,14 @@
 #define inverse_no3_y 325
 #define inverse_no3_z 1.0
 ```
-**Step 2. 编译加载**
+**Step 2. 设置污染源的大小**
+
+    默认与正向污染源大小相同
+  ``` c
+  #define	 di 0.6
+  ```
+  
+**Step 3. 编译加载**
     
     挂载source源项到UDS-1: inverse_source_no1
     挂载source源项到UDS-3: inverse_source_no2
@@ -74,5 +81,24 @@
     设置UDS-1的Flux Function: adjoint_flux
     设置UDS-3的Flux Function: adjoint_flux  
     设置UDS-5的Flux Function: adjoint_flux
+    
+**Step 4. FLUENT设置**
+
+    Equations激活UDS-1
+    Equations激活UDS-3
+    Equations激活UDS-4
+    
+    只计算UDS方程（因为单向耦合）
+    
+**Step 5. 换成串行启动FLUENT** 
+
+    因为宏内使用的根据坐标点查找cell只能在串行下执行
+    
+    执行define_on_demand宏: adjoint_probability
+    
+    查看结果
+    
+
+    
     
 
