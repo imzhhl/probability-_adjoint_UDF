@@ -1,6 +1,6 @@
 /************************************************************************************/
 /*
-User-Defined Function for inverse source using Adjoint probability method
+User-Defined Function for source identification using Adjoint probability method
 Author: Hongliang Zhang_WHU                                                                   
 Date:   2021-09-07
 */
@@ -49,37 +49,37 @@ extern "C"
 #define DIFF 10
 
 /*定义污染源和监测点的大小范围*/
-#define	 di 5
+#define	 di 1.0
 
 /*第一个污染源n1的坐标*/
-#define direct_no1_x 250
-#define direct_no1_y 425
-#define direct_no1_z 1.0
+#define direct_no1_x 162.6
+#define direct_no1_y 0.195
+#define direct_no1_z 166.58
 
 /*第二个污染源n2的坐标*/
-//#define direct_no2_x 2.0
-//#define direct_no2_y 2.0
-//#define direct_no2_z 1.0
+// #define direct_no2_x 0
+// #define direct_no2_y 0
+// #define direct_no2_z 0
 
-/*第三个污染源n3的坐标*/
-//#define direct_no3_x 3.0
-//#define direct_no3_y 3.0
-//#define direct_no3_z 1.0
+// /*第三个污染源n3的坐标*/
+// #define direct_no3_x 0
+// #define direct_no3_y 0
+// #define direct_no3_z 0
 
 /*第一个检测点n1的坐标*/
-#define inverse_no1_x 800
-#define inverse_no1_y 620
-#define inverse_no1_z 1.0
+#define inverse_no1_x 148.0
+#define inverse_no1_y 0.2
+#define inverse_no1_z 125.0
 
 /*第二个检测点n2的坐标*/
-#define inverse_no2_x 670
-#define inverse_no2_y 320
-#define inverse_no2_z 1.0
+#define inverse_no2_x 100.0
+#define inverse_no2_y 0.2
+#define inverse_no2_z 104.0
 
 /*第三个检测点n3的坐标*/
-#define inverse_no3_x 825
-#define inverse_no3_y 325
-#define inverse_no3_z 1.0
+#define inverse_no3_x 123.7
+#define inverse_no3_y 0.2
+#define inverse_no3_z 76.6
 
 /*----------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -168,7 +168,7 @@ DEFINE_SOURCE(inverse_source_no3, c, t, dS, eqn)
 }
 
 /*----------------------------------------------------------对流项取反-----------------------------------------------*/
-DEFINE_UDS_FLUX(adjoint_flux, f, t, i)
+DEFINE_UDS_FLUX(Adjoint_flux,f,t,i)
 {
 	cell_t c0, c1 = -1;
 	Thread *t0, *t1 = NULL;
@@ -234,7 +234,7 @@ DEFINE_ON_DEMAND(adjoint_probability)
 	CX_Cell_Id* cx_cell3 = NULL; 
 	real Pt_to_find1[ND_ND]={inverse_no1_x, inverse_no1_y, inverse_no1_z};		/*指定寻找点1的坐标*/
 	real Pt_to_find2[ND_ND]={inverse_no2_x, inverse_no2_y, inverse_no2_z};		/*指定寻找点2的坐标*/
-	real Pt_to_find3[ND_ND]={inverse_no3_x, inverse_no3_y, inverse_no3_z};		/*指定寻找点2的坐标*/
+	real Pt_to_find3[ND_ND]={inverse_no3_x, inverse_no3_y, inverse_no3_z};		/*指定寻找点3的坐标*/
 	double Pt1[ND_ND], Pt2[ND_ND],  Pt3[ND_ND]; 
 	ND_Search *domain_table = NULL; 
 	domain_table = CX_Start_ND_Point_Search(domain_table,TRUE,-1); /* 准备开始查找点 */
@@ -282,7 +282,7 @@ DEFINE_ON_DEMAND(adjoint_probability)
 	}
 	domain_table = CX_End_ND_Point_Search(domain_table); //结束查找 
 	/*-----------------------------------------根据坐标获取no1、no2坐标的cell------end------------------------------------------------*/
-	
+
 	//for(sigma_temp = 1.0; sigma_temp <= 10.0; sigma_temp++)
 	{
 		//		for (ratio = 1.0; ratio <= 500.0;)
