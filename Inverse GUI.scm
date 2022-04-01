@@ -27,7 +27,7 @@
 
 		; 定义回调函数，点击按钮OK后调用
 		(define (apply-cb . args)
-			(display "The dialog closed!\n")
+			(display "\nThe dialog closed!\n")
 		)  
 		
 		; 定义回调函数，点击按钮Apply后调用
