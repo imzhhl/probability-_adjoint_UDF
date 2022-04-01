@@ -111,7 +111,7 @@ float sigma = 0.03
 /*源强度系数*/
 float Co = 100
 ```
-     或者采用GUI窗口（Source Inverse）进行sigma和Co的设置，这样不用每次都进行UDF的编译和加载
+    或者采用GUI窗口（Source Inverse）进行sigma和Co的设置，这样不用每次都进行UDF的编译和加载
 ---
 
 # ✨Wells-Riley Model Used Euler Method in CFD
