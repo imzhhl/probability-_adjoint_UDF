@@ -19,7 +19,7 @@
 			(btn2)
 		)
 
-		; 定义回调函数，加载后自动调用
+		; 定义回调函数，加载后自动调用，用于初始化
 		(define (update-cb . args)
 			(cx-set-real-entry sigma 0.01)
 			(cx-set-real-entry co 100.0)
@@ -27,16 +27,17 @@
 
 		; 定义回调函数，点击按钮OK后调用
 		(define (apply-cb . args)
-			(display "The dialog closed!")
+			(display "The dialog closed!\n")
 		)  
 		
-		; 定义回调函数，点击按钮Click后调用
+		; 定义回调函数，点击按钮Apply后调用
 		(define (btn-cb1 . args)
 			(rpsetvar 'myudf/sigma (cx-show-real-entry sigma)) ; 将GUI中的控件值赋值给变量
 			(rpsetvar 'myudf/co (cx-show-real-entry co))  ; 将GUI中的控件值赋值给变量
 			(%run-udf-apply 7) ; 调用UDF宏，这里的7为UDF宏中的mode参数
 		)
 		
+	  	; 定义回调函数，点击按钮ZHHL后调用
 		(define (btn-cb2 . args)
 			(display "\n")
 			(display "******************\n")
@@ -62,4 +63,5 @@
     ) 
 ) 
  
+;调用函数 
 (gui-dialog-box)
