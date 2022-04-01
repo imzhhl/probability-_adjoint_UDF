@@ -45,7 +45,7 @@
 			(display "******************\n")
 		)
 		
-       ; 创建GUI元素
+       		; 创建GUI元素
 		(lambda args
 			(if (not dialog-box)
 				(let ()
