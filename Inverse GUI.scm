@@ -26,9 +26,10 @@
 		)
 
 		; 定义回调函数，点击按钮OK后调用
-		(define (apply-cb . args)
-			(display "\nThe dialog closed!\n")
-		)  
+		;(define (apply-cb . args)
+		;	(display "\nThe dialog closed!\n")
+		;) 
+		(define apply-cb #f)
 		
 		; 定义回调函数，点击按钮Apply后调用
 		(define (btn-cb1 . args)
@@ -37,25 +38,29 @@
 			(%run-udf-apply 7) ; 调用UDF宏，这里的7为UDF宏中的mode参数
 		)
 		
-	  	; 定义回调函数，点击按钮ZHHL后调用
+	  	; 定义回调函数，点击按钮Execute UDF后调用
 		(define (btn-cb2 . args)
-			(display "\n")
-			(display "******************\n")
-			(display "*Have a good day!*\n")
-			(display "******************\n")
+			(define s  )
+			(ti-menu-load-string "define/user-defined/execute-on-demand \"adjoint_probability::libudf\"") ;执行Define_on_Demand宏
+			
+		;	(display "\n")
+		;	(display "******************\n")
+		;	(display "*Have a good day!*\n")
+		;	(display "******************\n")
+		
 		)
 		
-       		; 创建GUI元素
+       ; 创建GUI元素
 		(lambda args
 			(if (not dialog-box)
 				(let ()
-					(set! dialog-box (cx-create-panel "Source Inverse" apply-cb update-cb))
-					(set! table (cx-create-table dialog-box "Some useful parms" 'border #t 'below 0 'right-of 0))
+					(set! dialog-box (cx-create-panel "Source Inverse: 2022-04-01" apply-cb update-cb))
+					(set! table (cx-create-table dialog-box "Some Useful Parms:" 'border #t 'below 0 'right-of 0))
 			   
 					(set! sigma (cx-create-real-entry table "For sigma:" 'row 1 'col 1))
 					(set! co (cx-create-real-entry table "For Co:" 'row 1 'col 2)) 
 					(set! btn1 (cx-create-button table "Apply" 'activate-callback btn-cb1 'row 2 'col 1))
-					(set! btn2 (cx-create-button table "ZHHL"'activate-callback btn-cb2 'row 2 'col 2))					
+					(set! btn2 (cx-create-button table "Execute UDF"'activate-callback btn-cb2 'row 2 'col 2))					
 				) 
 			)         
 			(cx-show-panel dialog-box)
