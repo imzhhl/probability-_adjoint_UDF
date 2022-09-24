@@ -6,7 +6,7 @@ Date:   2021-09-07
 */
 
 /*==================================================================*/
-/* 1. Implementation of  mixed boundary (3st) condition for a UDS   */
+/* 1. Implementation of mixed boundary (3rd) condition for a UDS    */
 /* 2. Implementation of inverse flux function for UDS               */
 /* 3. Implementation of diffusivity coefficient for UDS             */
 /* 4. the UDS	source term is applied by splitting Mesh in FLUENT  */
