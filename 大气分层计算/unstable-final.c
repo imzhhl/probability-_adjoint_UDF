@@ -58,8 +58,8 @@ DEFINE_PROFILE(inlet_V_Unstable,t,i)
 		phiE = 1.0-(z/Lin);
 		phiM = pow((double)1.0-16.0*(z/Lin),(double)-0.25);
 		/* 下面两个表达式都是对的 */
-		F_PROFILE(f, t, i) = (uStar/vonKarman)*(log(8.0*(z/z0) * (pow((double)phiM,(double)2.0))/( pow((double)phiM+1.0,(double)2.0)*(pow((double)phiM,(double)2.0)+1.0))) - pi/2.0 + 2.0*atan(1.0/phiM));
-		//F_PROFILE(f, t, i) = (uStar/vonKarman)*(log(z/z0)-log(0.125*    (1.0+pow((double)phiM, (double)-2.0))    *    (pow((double)1.0+1.0/phiM,(double)2.0))      ) -pi/2.0 + 2.0*atan(1.0/phiM));
+		//F_PROFILE(f, t, i) = (uStar/vonKarman)*(log(8.0*(z/z0) * (pow((double)phiM,(double)4.0))/( pow((double)phiM+1.0,(double)2.0)*(pow((double)phiM,(double)2.0)+1.0))) - pi/2.0 + 2.0*atan(1.0/phiM));
+		F_PROFILE(f, t, i) = (uStar/vonKarman)*(log(z/z0)-log(0.125*    (1.0+pow((double)phiM, (double)-2.0))    *    (pow((double)1.0+1.0/phiM,(double)2.0))      ) -pi/2.0 + 2.0*atan(1.0/phiM));
 	}
 	end_f_loop(f,t)
 }
