@@ -1,12 +1,12 @@
 /* **************************************************************
-** ÎÈ¶¨²ã½á **
+** ç¨³å®šå±‚ç»“ **
 **************************************************************
-Fluent UDFs ÓÃÓÚÄ£ÄâÖĞĞÔABLÁ÷¶¯
+Fluent UDFs ç”¨äºæ¨¡æ‹Ÿä¸­æ€§ABLæµåŠ¨
 
-1. Í¨¹ı¶¨ÒåµÄ²ÎÊı½øĞĞABLÁ÷¶¯µÄ¿ØÖÆ
-2. È·±£Çó½âÆ÷ÔÚexpertÄ£Ê½ÏÂ½øĞĞ¼ÆËã
-3. UDFÍ¨¹ı±àÒë·½Ê½¼ÓÔØ
-4. ZHHLĞŞ¸ÄµÄµØ·½ÒÑ¾­×ö³öÁË±ê¼Ç(ZHHL)
+1. é€šè¿‡å®šä¹‰çš„å‚æ•°è¿›è¡ŒABLæµåŠ¨çš„æ§åˆ¶
+2. ç¡®ä¿æ±‚è§£å™¨åœ¨expertæ¨¡å¼ä¸‹è¿›è¡Œè®¡ç®—
+3. UDFé€šè¿‡ç¼–è¯‘æ–¹å¼åŠ è½½
+4. ZHHLä¿®æ”¹çš„åœ°æ–¹å·²ç»åšå‡ºäº†æ ‡è®°(ZHHL)
 
 -------------------------------------------
 Owner: Hongliang Zhang <zhhl_email@qq.com>
@@ -15,7 +15,7 @@ Check Date: 2022-10-18*/
 #include "udf.h"
 #include "math.h"
 
-/* Ä£ĞÍ²ÎÊı */
+/* æ¨¡å‹å‚æ•° */
 #define Cmu 0.09
 #define vonKarman 0.4
 #define Ce1 1.21
@@ -25,15 +25,15 @@ Check Date: 2022-10-18*/
 #define sigma_theta 1.0
 #define PrTurb 0.85
 
-/* ·çËÙ²ÎÊı */
-#define z0 0.0128 /*µØÃæ´Ö²Ú¶È, m*/
-#define Cs 0.5 /* ´Ö²Ú¶È³£Êı */
-#define uStar 0.320 /* Ä¦²ÁËÙ¶È, uStar = (vonKarman*uRef)/log(zRef/z0); */
-#define Lin 330 /* ÄªÄş³¤¶È, ±¾UDFÖĞLin±ØĞë´óÓÚ0 */
-#define densOper 1.0 /* ²Ù×÷ÃÜ¶È. Ô­À´Îª1.0919. ºó¸ÄÎª1.0 */  /*ZHHL*/
+/* é£é€Ÿå‚æ•° */
+#define z0 0.0128 /*åœ°é¢ç²—ç³™åº¦, m*/
+#define Cs 0.5 /* ç²—ç³™åº¦å¸¸æ•° */
+#define uStar 0.320 /* æ‘©æ“¦é€Ÿåº¦, uStar = (vonKarman*uRef)/log(zRef/z0); */
+#define Lin 330 /* è«å®é•¿åº¦, æœ¬UDFä¸­Linå¿…é¡»å¤§äº0 */
+#define densOper 1.0 /* æ“ä½œå¯†åº¦. åŸæ¥ä¸º1.0919. åæ”¹ä¸º1.0 */  /*ZHHL*/
 
 
-/* ********************** Èë¿ÚËÙ¶È ********************** */
+/* ********************** å…¥å£é€Ÿåº¦ ********************** */
 DEFINE_PROFILE(inlet_V_Stable,t,i)
 {
 	double x[ND_ND];
@@ -52,7 +52,7 @@ DEFINE_PROFILE(inlet_V_Stable,t,i)
 	end_f_loop(f,t)
 }
 
-/* ********************** Èë¿Ú k ********************** */
+/* ********************** å…¥å£ k ********************** */
 DEFINE_PROFILE(inlet_k_Stable,t,i)
 {
 	double x[ND_ND];
@@ -72,7 +72,7 @@ DEFINE_PROFILE(inlet_k_Stable,t,i)
 	end_f_loop(f,t)
 }
 
-/* ********************** Èë¿Ú epsilon ********************** */
+/* ********************** å…¥å£ epsilon ********************** */
 DEFINE_PROFILE(inlet_e_Stable,t,i)
 {
 	double x[ND_ND];
@@ -92,8 +92,8 @@ DEFINE_PROFILE(inlet_e_Stable,t,i)
 	end_f_loop(f,t)
 }
 
-/* ************************ k Ô´Ïî**********************/
-/*±¾Ä£ĞÍ²»ĞèÒªÇó½âÄÜÁ¿Ä£ĞÍ*/
+/* ************************ k æºé¡¹**********************/
+/*æœ¬æ¨¡å‹ä¸éœ€è¦æ±‚è§£èƒ½é‡æ¨¡å‹*/
 
 DEFINE_SOURCE(k_source_DTU_Stable,c,t,dS,eqn)
 {
@@ -125,11 +125,11 @@ DEFINE_SOURCE(k_source_DTU_Stable,c,t,dS,eqn)
 }
 
 
-/* ************************ Epsilon Ô´Ïî**********************
-EpsilonÊÇÌİ¶ÈµÄº¯Êı, Îª±£´æÌİ¶ÈĞèÒªÔÙexpertÄ£Ê½ÏÂ½øĞĞ¼ÆËã(tuiÃüÁîÊäÈë: solve/set/expert)
-DTU·½·¨Í¨¹ı¸Ä±äCe3À´ĞŞ¸ÄÄ£ĞÍ, Èô²»Ñ¡¿ªÆôÄÜÁ¿·½³ÌGb=0£¬ÔòÍ¨¹ıÔ´ÏîÀ´ÖØĞÂÌí¼ÓGb*/
+/* ************************ Epsilon æºé¡¹**********************
+Epsilonæ˜¯æ¢¯åº¦çš„å‡½æ•°, ä¸ºä¿å­˜æ¢¯åº¦éœ€è¦å†expertæ¨¡å¼ä¸‹è¿›è¡Œè®¡ç®—(tuiå‘½ä»¤è¾“å…¥: solve/set/expert)
+DTUæ–¹æ³•é€šè¿‡æ”¹å˜Ce3æ¥ä¿®æ”¹æ¨¡å‹, è‹¥ä¸é€‰å¼€å¯èƒ½é‡æ–¹ç¨‹Gb=0ï¼Œåˆ™é€šè¿‡æºé¡¹æ¥é‡æ–°æ·»åŠ Gb*/
 
-/* DTU Epsilon »ùÓÚ±í´ïÊ½ĞŞ¸ÄCe3À´Ìí¼ÓÔ´Ïî */
+/* DTU Epsilon åŸºäºè¡¨è¾¾å¼ä¿®æ”¹Ce3æ¥æ·»åŠ æºé¡¹ */
 DEFINE_SOURCE(epsilon_source_DTU_Stable,c,t,dS,eqn)
 {
 	double x[ND_ND];
@@ -161,7 +161,7 @@ DEFINE_SOURCE(epsilon_source_DTU_Stable,c,t,dS,eqn)
 	return source;
 }
 
-/* ************************* ³õÊ¼»¯, ÓÃÓÚ°ïÖú¼ÓËÙÊÕÁ²ºÍ·ÀÖ¹Çó½âÌİ¶ÈÊ±·¢É¢P42, Èç¹ûÄÜÕı³£Ëã¾Í²»ÓÃÁË ************************** */
+/* ************************* åˆå§‹åŒ–, ç”¨äºå¸®åŠ©åŠ é€Ÿæ”¶æ•›å’Œé˜²æ­¢æ±‚è§£æ¢¯åº¦æ—¶å‘æ•£P42, å¦‚æœèƒ½æ­£å¸¸ç®—å°±ä¸ç”¨äº† ************************** */
 
 DEFINE_INIT(initStable,d)
 {
@@ -192,9 +192,9 @@ DEFINE_INIT(initStable,d)
 }
 
 
-/* ********************** ±ÚÃæ´Ö²Ú¶È ********************** */
+/* ********************** å£é¢ç²—ç³™åº¦ ********************** */
 
-/* Èç¹ûÊ¹ÓÃ×Ô¶¨ÒåµÄABL¶ÔÊı±ÚÃæº¯Êı, ÔòĞèÒªÊ¹ÓÃ¸Ã´Ö²Ú¶È */
+/* å¦‚æœä½¿ç”¨è‡ªå®šä¹‰çš„ABLå¯¹æ•°å£é¢å‡½æ•°, åˆ™éœ€è¦ä½¿ç”¨è¯¥ç²—ç³™åº¦ */
 DEFINE_PROFILE(wallRoughness,t,i)
 {
 	double x[ND_ND];
@@ -208,7 +208,7 @@ DEFINE_PROFILE(wallRoughness,t,i)
 	end_f_loop(f,t)
 }
 
-/* Èç¹ûÎ´Ê¹ÓÃ×Ô¶¨ÒåµÄABL¶ÔÊı±ÚÃæº¯Êı, ÔòÓÃ¸ÃĞŞÕıºóµÄ±ÚÃæ´Ö²Ú¶È */
+/* å¦‚æœæœªä½¿ç”¨è‡ªå®šä¹‰çš„ABLå¯¹æ•°å£é¢å‡½æ•°, åˆ™ç”¨è¯¥ä¿®æ­£åçš„å£é¢ç²—ç³™åº¦ */
 DEFINE_PROFILE(wallRoughnessModified,t,i)
 {
 	double x[ND_ND];
@@ -221,10 +221,10 @@ DEFINE_PROFILE(wallRoughnessModified,t,i)
 	end_f_loop(f,t)
 }
 
-/* ************************* ±ÚÃæº¯Êı ************************** */
+/* ************************* å£é¢å‡½æ•° ************************** */
 
-/* Designed around u/uStar = 1/K*log(z/z0) ²Î¿¼ÎÄÏ×: Improved k-e model and wall function formulation for the RANS simulation of ABL flows, Parente et al
-ÓÃ¸Ã±ÚÃæº¯Êı²»ÔÙĞèÒªz0*9.73/Cs Òò´Ë, ABLÄ£ĞÍÖĞµÄ´Ö²Ú¶È³¤¶ÈÖ±½ÓµÈÓÚµÚÒ»¸öµ¥Ôª¸ß¶È= 2*z0*/
+/* Designed around u/uStar = 1/K*log(z/z0) å‚è€ƒæ–‡çŒ®: Improved k-e model and wall function formulation for the RANS simulation of ABL flows, Parente et al
+ç”¨è¯¥å£é¢å‡½æ•°ä¸å†éœ€è¦z0*9.73/Cs å› æ­¤, ABLæ¨¡å‹ä¸­çš„ç²—ç³™åº¦é•¿åº¦ç›´æ¥ç­‰äºç¬¬ä¸€ä¸ªå•å…ƒé«˜åº¦= 2*z0*/
 
 DEFINE_WALL_FUNCTIONS(ABL_logLaw, f, t, c0, t0, wf_ret, yPlus, Emod)
 {
